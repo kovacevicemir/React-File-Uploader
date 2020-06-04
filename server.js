@@ -1,7 +1,9 @@
 const express = require('express')
 const fileUpload = require('express-fileupload')
+const cors = require('cors')
 
 const app = express()
+app.use(cors())
 
 app.use(fileUpload())
 
@@ -19,7 +21,9 @@ app.post('/upload', (req, res) => {
             return res.status(500).send(err)
         }
 
-        res.json(200).json({fileName: file.name, filePath:`/uploads/${file.name}`})
+        const uploadResponse = {fileName: file.name, filePath:`/uploads/${file.name}`}
+
+        res.status(200).json(uploadResponse)
     })
 })
 
